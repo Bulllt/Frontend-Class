@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <form class="form">
+      <h1>Crea una cuenta</h1>
+
+      <div class="inputWrapper">
+        <label class="inputName">Email</label>
+        <input type="email" class="inputField" required />
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Nombre</label>
+        <input type="text" class="inputField" required />
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Apellido</label>
+        <input type="text" class="inputField" required />
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Contraseña</label>
+        <input type="password" class="inputField" required />
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Confirmar contraseña</label>
+        <input type="password" class="inputField" required />
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Fecha de nacimiento</label>
+        <div class="dateOfBirth">
+          <select class="dateOfBirthSelect" required>
+            <option value="" disabled selected>Día</option>
+            <script>
+              for (let i = 1; i <= 31; i++) {
+                document.write(`<option value="${i}">${i}</option>`);
+              }
+            </script>
+          </select>
+
+          <select class="dateOfBirthSelect" required>
+            <option value="" disabled selected>Mes</option>
+            <option value="1">Enero</option>
+            <option value="2">Febrero</option>
+            <option value="3">Marzo</option>
+            <option value="4">Abril</option>
+            <option value="5">Mayo</option>
+            <option value="6">Junio</option>
+            <option value="7">Julio</option>
+            <option value="8">Agosto</option>
+            <option value="9">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+
+          <select class="dateOfBirthSelect" required>
+            <option value="" disabled selected>Año</option>
+            <script>
+              const currentYear = new Date().getFullYear();
+              for (let i = currentYear; i >= 1940; i--) {
+                document.write(`<option value="${i}">${i}</option>`);
+              }
+            </script>
+          </select>
+        </div>
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Género</label>
+        <div class="genderOptions">
+          <input type="radio" id="male" name="gender" value="male" required />
+          <label for="male">Masculino</label>
+          <input
+            type="radio"
+            id="female"
+            name="gender"
+            value="female"
+            required
+          />
+          <label for="female">Femenino</label>
+          <input type="radio" id="other" name="gender" value="other" required />
+          <label for="other">Prefiero no decirlo</label>
+        </div>
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Descripción</label>
+        <textarea class="inputField" rows="3"></textarea>
+      </div>
+
+      <div class="inputWrapper">
+        <label class="inputName">Selecciona tus intereses</label>
+        <select class="inputField">
+          <option value="" disabled selected>Selecciona una opción</option>
+          <option value="tech">Hardware de computadores</option>
+          <option value="music">Música</option>
+          <option value="gaming">Videojuegos</option>
+          <option value="sports">Deportes</option>
+        </select>
+      </div>
+
+      <div class="termsWrapper">
+        <input type="checkbox" id="terms" required />
+        <label for="terms">Acepto los términos y condiciones</label>
+      </div>
+
+      <button class="sendForm">Registrarse</button>
+    </form>
+  </body>
+</html>
