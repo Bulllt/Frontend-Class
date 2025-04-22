@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tails of Iron - Registro</title>
+    <link rel="stylesheet" href="registro.css" />
+  </head>
+  <body>
+    <header class="header">
+      <nav class="navbar">
+        <ul class="navList">
+          <li><a href="./index.html">Inicio</a></li>
+          <li><a href="./registro.html">Registro</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="main">
+      <section class="formSection">
+        <h2>Únete a la Resistencia</h2>
+        <form class="registerForm" action="#" method="POST">
+          <div class="formGroup">
+            <label for="name">Nombre del Guerrero:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              minlength="3"
+              maxlength="50"
+              placeholder="Ej: Redgi Rattus"
+            />
+          </div>
+
+          <div class="formGroup">
+            <label for="email">Correo del Guerrero:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="tunombre@reino.rata"
+            />
+          </div>
+
+          <div class="formGroup">
+            <label for="password">Contraseña Secreta:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              minlength="8"
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$"
+              placeholder="Mínimo 8 caracteres, 1 mayúscula y 1 número"
+            />
+          </div>
+
+          <div class="formGroup">
+            <label for="birth">Fecha de Nacimiento:</label>
+            <div class="dateOfBirth">
+              <select id="day" name="day" required>
+                <option value="" disabled selected>Día</option>
+                <script>
+                  for (let i = 1; i <= 31; i++) {
+                    document.write(`<option value="${i}">${i}</option>`);
+                  }
+                </script>
+              </select>
+
+              <select id="month" name="month" required>
+                <option value="" disabled selected>Mes</option>
+                <option value="1">Enero</option>
+                <option value="2">Febrero</option>
+                <option value="3">Marzo</option>
+                <option value="4">Abril</option>
+                <option value="5">Mayo</option>
+                <option value="6">Junio</option>
+                <option value="7">Julio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Septiembre</option>
+                <option value="10">Octubre</option>
+                <option value="11">Noviembre</option>
+                <option value="12">Diciembre</option>
+              </select>
+
+              <select id="year" name="year" required>
+                <option value="" disabled selected>Año</option>
+                <script>
+                  const currentYear = new Date().getFullYear();
+                  for (let i = currentYear; i >= 1940; i--) {
+                    document.write(`<option value="${i}">${i}</option>`);
+                  }
+                </script>
+              </select>
+            </div>
+          </div>
+
+          <div class="radioGroup">
+            <label>Rango en la Resistencia:</label>
+            <div class="radioOptions">
+              <label>
+                <input type="radio" name="rank" value="soldado" required />
+                Soldado
+              </label>
+              <label>
+                <input type="radio" name="rank" value="caballero" /> Caballero
+              </label>
+              <label>
+                <input type="radio" name="rank" value="general" /> General
+              </label>
+            </div>
+          </div>
+
+          <div class="formGroup">
+            <label for="comment">Juramento de Lealtad:</label>
+            <textarea
+              id="comment"
+              name="comment"
+              required
+              minlength="10"
+              maxlength="200"
+              placeholder="Promete lealtad al reino ratonil..."
+            ></textarea>
+          </div>
+
+          <div class="formGroup">
+            <label for="region">Región de Origen:</label>
+            <select id="region" name="region" required>
+              <option value="" disabled selected>Selecciona tu región</option>
+              <option value="castillo">Castillo Rattus</option>
+              <option value="bosque">Bosque Sombrío</option>
+              <option value="pantano">Pantanos Verdes</option>
+              <option value="cloaca">Cloacas Olvidadas</option>
+            </select>
+          </div>
+
+          <button type="submit" class="submitButton">Enviar Juramento</button>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 - Web de Tails of Iron. No oficial.</p>
+    </footer>
+
+    <script>
+      document
+        .querySelector(".registerForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          if (this.checkValidity()) {
+            const selectedRank = document.querySelector(
+              'input[name="rank"]:checked'
+            ).value;
+            const rank =
+              selectedRank.charAt(0).toUpperCase() + selectedRank.slice(1);
+
+            alert(
+              `¡Te has unido a las filas del Rey Redgi! Preparate para la batalla, noble ${rank}.`
+            );
+
+            this.reset();
+          }
+        });
+    </script>
+  </body>
+</html>

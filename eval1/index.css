@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  --color-primary: #2c3941;
+  --color-secondary: #688177;
+  --color-tertiary-100: #947f5b;
+  --color-tertiary-200: #7f5a48;
+  --color-tertiary-300: #443227;
+  --color-accent: #c9603f;
+  --color-white: #ffffff;
+}
+body {
+  font-family: "MedievalSharp", cursive;
+  line-height: 1.6;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.header {
+  background-color: var(--color-secondary);
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+.navbar {
+  display: flex;
+  justify-content: center;
+}
+.navList {
+  display: flex;
+  list-style: none;
+  gap: 2rem;
+}
+.navList a {
+  color: var(--color-white);
+  text-decoration: none;
+  font-weight: bold;
+}
+.navList a:hover {
+  color: var(--color-accent);
+}
+
+.hero {
+  text-align: center;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.heroImage {
+  max-width: 75%;
+  height: auto;
+  border: 5px solid var(--color-accent);
+  margin: 1rem 0;
+}
+.hero p {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: var(--color-white);
+}
+
+.characters {
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.characters h2 {
+  margin-bottom: 2rem;
+  color: var(--color-accent);
+  text-align: center;
+}
+.charactersContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.charactersBox {
+  flex: 1 1 300px;
+  background-color: var(--color-tertiary-300);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--color-tertiary-100);
+  color: var(--color-white);
+}
+.charactersBox h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.charactersList {
+  margin-left: 2rem;
+}
+
+.curiosities {
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.curiosities h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--color-accent);
+}
+.curiositiesContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+}
+.curiosityBox {
+  flex: 1 1 300px;
+  background-color: var(--color-tertiary-300);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 2px solid var(--color-tertiary-100);
+  color: var(--color-white);
+}
+.curiosityBox h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--color-tertiary-200);
+  color: var(--color-white);
+}
