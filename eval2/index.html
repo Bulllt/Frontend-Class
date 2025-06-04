@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Selecciona tu pokemon</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <main class="main">
+      <section id="hero" class="hero">
+        <img
+          src="assets/img/default.jpg"
+          alt="Imagen de Pokemon"
+          class="heroImage"
+        />
+        <h1 class="heroTitle">Elige tu pokemon inicial</h1>
+
+        <div class="heroInput">
+          <label class="inputLabel">Ingresa tu nombre</label>
+          <input type="text" id="trainerName" class="inputField" required />
+          <span class="errorMessage"></span>
+        </div>
+
+        <div class="heroInput">
+          <label class="inputLabel">Ingresa tu region</label>
+          <select name="region" id="region" class="selectField"></select>
+        </div>
+      </section>
+
+      <section id="pokemonCards" class="pokemonCards hidden">
+        <div class="cardsContainer"></div>
+
+        <button id="submitSelection" class="submitButton hidden">
+          Confirmar selección
+        </button>
+      </section>
+
+      <section id="selectionsLog" class="selectionsLog hidden">
+        <h2 class="selectionsLogTitle">Tu selección</h2>
+        <ul class="selectionsList"></ul>
+        <button id="resetSelections" class="resetButton">
+          Reiniciar selecciones
+        </button>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>&copy; 2025 - Web de Pokemon. No oficial.</p>
+    </footer>
+
+    <script src="index.js"></script>
+  </body>
+</html>
