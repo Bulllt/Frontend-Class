@@ -21,17 +21,17 @@ export default {
 <template>
   <nav class="navbarContainer">
     <div class="navbarContent">
-      <div class="logoSection">
+      <a href="/" class="logoSection">
         <img src="../assets/logo.png" alt="LOGO" class="pokeballLogo" />
         <h1 class="logoText">POKÉDEX</h1>
-      </div>
+      </a>
 
       <div class="navigationLinks">
         <router-link to="/" class="navLink" active-class="activeLink">
           <font-awesome-icon icon="fa-solid fa-home" class="navIcon" />
           <span class="navText">INICIO</span>
         </router-link>
-        <router-link to="/search" class="navLink" active-class="activeLink">
+        <router-link to="/pokedex" class="navLink" active-class="activeLink">
           <font-awesome-icon icon="fa-solid fa-search" class="navIcon" />
           <span class="navText">BUSCAR</span>
         </router-link>
@@ -101,6 +101,7 @@ export default {
   align-items: center;
   gap: 1rem;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .pokeballLogo {

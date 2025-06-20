@@ -10,10 +10,21 @@ import {
   faBolt,
   faHeart,
   faChartBar,
+  faChevronLeft,
+  faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { router } from "../constants/router";
 
-library.add(faHome, faSearch, faStar, faBolt, faHeart, faChartBar);
+library.add(
+  faHome,
+  faSearch,
+  faStar,
+  faBolt,
+  faHeart,
+  faChartBar,
+  faChevronLeft,
+  faChevronRight
+);
 
 const app = createApp(App);
 app.use(router);
