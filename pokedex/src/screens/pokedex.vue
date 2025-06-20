@@ -1,49 +1,85 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
+import { useRoute } from "vue-router";
 import PokemonCard from "../components/pokemonCard.vue";
+import { PokeAPI } from "../constants/api";
 
-const placeholderPokemons = Array.from({ length: 100 }, (_, i) => ({
-  id: i + 1,
-  name: `Pokémon ${i + 1}`,
-  types: ["normal"],
-  sprite:
-    "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
-}));
-
+const route = useRoute();
 const searchQuery = ref("");
 const currentPage = ref(1);
-const itemsPerPage = 20;
+const itemsPerPage = 100;
+const pokemons = ref([]);
+const totalCount = ref(0);
+const isLoading = ref(false);
+const selectedType = ref(null);
 
-const filteredPokemons = computed(() => {
-  return placeholderPokemons.filter((pokemon) =>
-    pokemon.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-});
+const fetchPokemons = async () => {
+  try {
+    isLoading.value = true;
+    const offset = (currentPage.value - 1) * itemsPerPage;
 
-const totalPages = computed(() =>
-  Math.ceil(filteredPokemons.value.length / itemsPerPage)
-);
-const displayedPokemons = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return filteredPokemons.value.slice(start, end);
-});
-
-const handleSearch = () => {
-  currentPage.value = 1;
+    if (selectedType.value) {
+      const typeResponse = await PokeAPI.getPokemonByType(selectedType.value);
+      pokemons.value = typeResponse;
+      totalCount.value = typeResponse.length;
+      console.log(typeResponse);
+    } else {
+      const data = await PokeAPI.getPokemonList(itemsPerPage, offset);
+      pokemons.value = data.results;
+      totalCount.value = data.count;
+    }
+  } catch (error) {
+    console.error("Error loading Pokémon:", error);
+    pokemons.value = [];
+  } finally {
+    isLoading.value = false;
+  }
 };
 
+const handleSearch = async () => {
+  if (!searchQuery.value.trim()) {
+    fetchPokemons();
+    return;
+  }
+
+  try {
+    isLoading.value = true;
+    const result = await PokeAPI.searchPokemonByName(searchQuery.value);
+    pokemons.value = result ? [result] : [];
+    totalCount.value = result ? 1 : 0;
+    currentPage.value = 1;
+  } catch (error) {
+    console.error("Error searching Pokémon:", error);
+    pokemons.value = [];
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const totalPages = computed(() => Math.ceil(totalCount.value / itemsPerPage));
 const nextPage = () => {
   if (currentPage.value < totalPages.value) {
     currentPage.value++;
+    fetchPokemons();
   }
 };
 
 const prevPage = () => {
   if (currentPage.value > 1) {
     currentPage.value--;
+    fetchPokemons();
   }
 };
+
+watch(
+  () => route.query.type,
+  (newType) => {
+    selectedType.value = newType || null;
+    currentPage.value = 1;
+    fetchPokemons();
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -55,22 +91,31 @@ const prevPage = () => {
         <input
           type="text"
           v-model="searchQuery"
-          placeholder="Search Pokémon..."
+          placeholder="Buscar Pokémon..."
           class="searchInput"
           @input="handleSearch"
         />
       </div>
     </header>
 
+    <div v-if="isLoading" class="loadingState">
+      <div class="loadingSpinner"></div>
+      <p>Cargando Pokémon...</p>
+    </div>
+
+    <div v-else-if="pokemons.length === 0" class="emptyState">
+      <p>No se encontraron Pokémon</p>
+    </div>
+
     <div class="pokemonGrid">
       <PokemonCard
-        v-for="pokemon in displayedPokemons"
+        v-for="pokemon in pokemons"
         :key="pokemon.id"
         :pokemon="pokemon"
       />
     </div>
 
-    <div class="pagination">
+    <div v-if="!searchQuery && pokemons.length > 0" class="pagination">
       <button
         @click="prevPage"
         :disabled="currentPage === 1"
@@ -78,9 +123,11 @@ const prevPage = () => {
       >
         <font-awesome-icon icon="fa-solid fa-chevron-left" />
       </button>
+
       <span class="pageIndicator">
-        Page {{ currentPage }} of {{ totalPages }}
+        Página {{ currentPage }} de {{ totalPages }}
       </span>
+
       <button
         @click="nextPage"
         :disabled="currentPage === totalPages"
@@ -140,6 +187,40 @@ const prevPage = () => {
   top: 50%;
   transform: translateY(-50%);
   color: var(--dark-color);
+}
+
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  gap: 1rem;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid var(--background-color);
+  border-top: 5px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 2rem;
+  color: var(--dark-color);
+  font-size: 1.2rem;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .pokemonGrid {

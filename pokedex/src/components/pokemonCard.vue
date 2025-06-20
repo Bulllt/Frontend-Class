@@ -1,16 +1,56 @@
 <script setup>
+import { ref } from "vue";
+import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
+
 defineProps({
   pokemon: {
     type: Object,
     required: true,
   },
 });
+
+const translateType = (type) => {
+  const typesMap = {
+    normal: "Normal",
+    fire: "Fuego",
+    water: "Agua",
+    electric: "Eléctrico",
+    grass: "Planta",
+    ice: "Hielo",
+    fighting: "Lucha",
+    poison: "Veneno",
+    ground: "Tierra",
+    flying: "Volador",
+    psychic: "Psíquico",
+    bug: "Bicho",
+    rock: "Roca",
+    ghost: "Fantasma",
+    dragon: "Dragón",
+    dark: "Siniestro",
+    steel: "Acero",
+    fairy: "Hada",
+  };
+  return typesMap[type];
+};
+
+const isFavorite = ref(false);
+const toggleFavorite = () => {
+  isFavorite.value = !isFavorite.value;
+  console.log(`${isFavorite.value ? "added to" : "eliminated from"} favorites`);
+};
 </script>
 
 <template>
   <div class="pokemonCard" :class="`type-${pokemon.types[0]}`">
     <div class="pokemonImageContainer">
       <img :src="pokemon.sprite" :alt="pokemon.name" class="pokemonImage" />
+      <button @click.stop="toggleFavorite" class="favoriteButton">
+        <font-awesome-icon
+          :icon="isFavorite ? solidHeart : regularHeart"
+          :class="{ favoriteIcon: true, isFavorite: isFavorite }"
+        />
+      </button>
     </div>
     <div class="pokemonInfo">
       <span class="pokemonId"
@@ -24,7 +64,7 @@ defineProps({
           class="pokemonType"
           :class="`type-${type}`"
         >
-          {{ type }}
+          {{ translateType(type) }}
         </span>
       </div>
     </div>
@@ -61,6 +101,32 @@ defineProps({
   object-fit: contain;
 }
 
+.favoriteButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  z-index: 2;
+}
+
+.favoriteIcon {
+  color: white;
+  font-size: 1.2rem;
+  filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.7));
+  transition: all 0.2s ease;
+}
+
+.favoriteIcon.isFavorite {
+  color: var(--accent-color);
+}
+
+.favoriteIcon:hover {
+  transform: scale(1.2);
+}
+
 .pokemonInfo {
   padding: 1rem;
   text-align: center;
@@ -68,7 +134,7 @@ defineProps({
 
 .pokemonId {
   display: block;
-  color: #666;
+  color: #fff;
   font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }

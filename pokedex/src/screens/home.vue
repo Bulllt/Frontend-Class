@@ -32,7 +32,7 @@ export default {
                 style="color: var(--type-rock)"
               />
             </router-link>
-            <router-link to="/favorites" class="secondaryButton">
+            <router-link to="/favoritos" class="secondaryButton">
               <span class="buttonText">Ver Favoritos</span>
               <font-awesome-icon
                 icon="fa-solid fa-heart"

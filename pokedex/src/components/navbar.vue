@@ -35,7 +35,7 @@ export default {
           <font-awesome-icon icon="fa-solid fa-search" class="navIcon" />
           <span class="navText">BUSCAR</span>
         </router-link>
-        <router-link to="/favorites" class="navLink" active-class="activeLink">
+        <router-link to="/favoritos" class="navLink" active-class="activeLink">
           <font-awesome-icon icon="fa-solid fa-star" class="navIcon" />
           <span class="navText">FAVORITOS</span>
         </router-link>
@@ -57,12 +57,12 @@ export default {
         <font-awesome-icon icon="fa-solid fa-home" class="navIcon" />
         <span class="navText">INICIO</span>
       </router-link>
-      <router-link to="/search" class="mobileNavLink" @click="closeMobileMenu">
+      <router-link to="/pokedex" class="mobileNavLink" @click="closeMobileMenu">
         <font-awesome-icon icon="fa-solid fa-search" class="navIcon" />
         <span class="navText">BUSCAR</span>
       </router-link>
       <router-link
-        to="/favorites"
+        to="/favoritos"
         class="mobileNavLink"
         @click="closeMobileMenu"
       >

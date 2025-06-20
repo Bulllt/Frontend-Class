@@ -38,7 +38,7 @@ export default {
               >
             </li>
             <li>
-              <router-link to="/favorites" class="footerLink"
+              <router-link to="/favoritos" class="footerLink"
                 >Favoritos</router-link
               >
             </li>
