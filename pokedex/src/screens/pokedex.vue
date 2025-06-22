@@ -22,7 +22,6 @@ const fetchPokemons = async () => {
       const typeResponse = await PokeAPI.getPokemonByType(selectedType.value);
       pokemons.value = typeResponse;
       totalCount.value = typeResponse.length;
-      console.log(typeResponse);
     } else {
       const data = await PokeAPI.getPokemonList(itemsPerPage, offset);
       pokemons.value = data.results;

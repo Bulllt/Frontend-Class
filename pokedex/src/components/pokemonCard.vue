@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { faHeart as solidHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 
-defineProps({
+const props = defineProps({
   pokemon: {
     type: Object,
     required: true,
@@ -37,8 +37,31 @@ const translateType = (type) => {
 const isFavorite = ref(false);
 const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value;
-  console.log(`${isFavorite.value ? "added to" : "eliminated from"} favorites`);
+  const favorites = JSON.parse(localStorage.getItem("favoritePokemons")) || [];
+
+  if (isFavorite.value) {
+    if (!favorites.some((fav) => fav.id === props.pokemon.id)) {
+      favorites.push({
+        id: props.pokemon.id,
+        name: props.pokemon.name,
+        types: props.pokemon.types,
+        sprite: props.pokemon.sprite,
+      });
+    }
+  } else {
+    const index = favorites.findIndex((fav) => fav.id === props.pokemon.id);
+    if (index !== -1) {
+      favorites.splice(index, 1);
+    }
+  }
+
+  localStorage.setItem("favoritePokemons", JSON.stringify(favorites));
 };
+
+onMounted(() => {
+  const favorites = JSON.parse(localStorage.getItem("favoritePokemons")) || [];
+  isFavorite.value = favorites.some((fav) => fav.id === props.pokemon.id);
+});
 </script>
 
 <template>
