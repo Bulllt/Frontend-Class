@@ -12,6 +12,7 @@ import {
   faChartBar,
   faChevronLeft,
   faChevronRight,
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { router } from "../constants/router";
 
@@ -23,7 +24,8 @@ library.add(
   faHeart,
   faChartBar,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faArrowLeft
 );
 
 const app = createApp(App);

@@ -65,7 +65,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="pokemonCard" :class="`type-${pokemon.types[0]}`">
+  <div
+    class="pokemonCard"
+    :class="`type-${pokemon.types[0]}`"
+    @click="$router.push({ name: 'Details', params: { id: pokemon.id } })"
+  >
     <div class="pokemonImageContainer">
       <img :src="pokemon.sprite" :alt="pokemon.name" class="pokemonImage" />
       <button @click.stop="toggleFavorite" class="favoriteButton">

@@ -17,11 +17,17 @@ export const PokeAPI = {
         listResponse.data.results.map(async (pokemon) => {
           const detailResponse = await apiClient.get(pokemon.url);
           const data = detailResponse.data;
+
+          let sprite = data.sprites.other["official-artwork"].front_default;
+          if (!sprite) {
+            sprite = data.sprites.front_default;
+          }
+
           return {
             id: data.id,
             name: data.name,
             types: data.types.map((type) => type.type.name),
-            sprite: data.sprites.other["official-artwork"].front_default,
+            sprite: sprite,
           };
         })
       );
@@ -40,11 +46,17 @@ export const PokeAPI = {
     try {
       const response = await apiClient.get(`/pokemon/${name.toLowerCase()}`);
       const data = response.data;
+
+      let sprite = data.sprites.other["official-artwork"].front_default;
+      if (!sprite) {
+        sprite = data.sprites.front_default;
+      }
+
       return {
         id: data.id,
         name: data.name,
         types: data.types.map((type) => type.type.name),
-        sprite: data.sprites.other["official-artwork"].front_default,
+        sprite: sprite,
       };
     } catch (error) {
       if (error.response?.status === 404) return null;
@@ -63,17 +75,50 @@ export const PokeAPI = {
         limitedList.map(async (pokemon) => {
           const detailResponse = await apiClient.get(pokemon.url);
           const data = detailResponse.data;
+
+          let sprite = data.sprites.other["official-artwork"].front_default;
+          if (!sprite) {
+            sprite = data.sprites.front_default;
+          }
+
           return {
             id: data.id,
             name: data.name,
             types: data.types.map((type) => type.type.name),
-            sprite: data.sprites.other["official-artwork"].front_default,
+            sprite: sprite,
           };
         })
       );
       return pokemonDetails;
     } catch (error) {
       console.error(`Error fetching Pokémon of type ${type}:`, error);
+      throw error;
+    }
+  },
+
+  async getPokemonDetails(id) {
+    try {
+      const response = await apiClient.get(`/pokemon/${id}`);
+      const data = response.data;
+
+      let sprite = data.sprites.other["official-artwork"]?.front_default;
+      if (!sprite) {
+        sprite = data.sprites.front_default;
+      }
+
+      return {
+        id: data.id,
+        name: data.name,
+        types: data.types.map((type) => type.type.name),
+        sprite: sprite,
+        height: data.height,
+        weight: data.weight,
+        abilities: data.abilities.map((ability) => ability.ability.name),
+        stats: data.stats,
+        speciesUrl: data.species.url,
+      };
+    } catch (error) {
+      console.error("Error fetching Pokémon details:", error);
       throw error;
     }
   },
